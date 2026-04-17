@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="error" monitorInterval="60">
+    <appenders>    
+  		<Console name="Console" target="SYSTEM_OUT">            
+        	<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss} %-5level - %msg%xEx%n"/>
+        </Console>
+
+        <RollingFile name="RollingFile" fileName="logs/readers.log" filePattern="log/$${date:dd-MM-YYYY}/app-%d{dd-MM-yyyy}-%i.log.gz">
+            <PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss} %-5level - %msg%xEx%n"/>
+            <SizeBasedTriggeringPolicy size="10MB"/>
+        </RollingFile>
+    </appenders>
+    
+    <loggers>
+        <root level="trace">
+            <appender-ref ref="RollingFile"/>
+            <appender-ref ref="Console"/>
+        </root>
+    </loggers>
+</configuration>

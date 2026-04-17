@@ -1,0 +1,87 @@
+<form class="card-form" name="readersSAM" novalidate autocomplete="off">
+
+    <div class="panel panel-default" ng-if="reader.showPersonInformation(reader.person)">
+        <div class="panel-body">
+            <button class="btn btn-primary" ng-click="reader.clearPersonAndSearch()">
+                {{'BUSCA_PESSOA' | translate}}
+            </button>
+        </div>
+    </div>
+
+    <div class="panel panel-default" ng-if="reader.showPersonInformation(reader.person)">
+        <div class="panel-heading">
+            <span>{{'INFORMACOES_PESSOA' | translate}}</span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        <span class="badge-user photo" ng-style="{'background': reader.getPhoto()}" ng-show="reader.personPhoto"></span>
+                        <img class="badge-user photo" src="../../../../assets/images/user.png" ng-hide="reader.personPhoto">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6 form-group">
+                                    <label>{{'NOME' | translate}}</label>
+                                    <input class="form-control" name="personName" ng-model="reader.person.name" ng-disabled="reader.showPersonInformation(reader.person)">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>{{'EMAIL' | translate}}</label>
+                                    <input class="form-control" name="personEmail" ng-model="reader.person.emails[0].emailAddress" ng-disabled="reader.showPersonInformation(reader.person)">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>{{'TIPO_DOCUMENTO' | translate}}</label>
+                                    <input class="form-control" name="personDocumentType" ng-model="reader.person.documents[0].documentType.label" ng-disabled="reader.showPersonInformation(reader.person)">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>{{'DOCUMENTO' | translate}}</label>
+                                    <input class="form-control" name="personDocument" ng-model="reader.person.documents[0].document" ng-disabled="reader.showPersonInformation(reader.person)">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>{{'TELEFONE' | translate}}</label>
+                                    <input class="form-control" name="personPhone" ng-model="reader.person.phones[0].phoneNumber" ng-disabled="reader.showPersonInformation(reader.person)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" ng-if="!reader.showPersonInformation(reader.person)">
+        <div class="panel-heading">
+            <span>{{'LOCALIZAR_PESSOA' | translate}}</span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>{{'BUSCA' | translate}}</label>
+                        <input type="text" ng-model="reader.personSelected" ng-model-options="reader.modelOptions" uib-typeahead="person as (person.name + ' (' + person.mandatoryDocuments[0].documentType.label + ' ' + person.mandatoryDocuments[0].document + ')' ) for person in reader.searchPerson($viewValue)" typeahead-on-select="reader.onSelect($item)" typeahead-loading="loadingPersons" typeahead-no-results="noResults" aria-owns="findPerson" class="form-control" typeahead-min-length='3' maxlength="100">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" ng-if="reader.showPersonInformation(reader.person)">
+        <div class="panel-heading">
+            <span>{{'CAPTURA_BIOMETRICA' | translate}}</span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>{{'FABRICANTE' | translate}}</label>
+                    <select class="form-control" ng-model="reader.manufacturer" ng-options="enum.id as enum.name for enum in reader.validBiometricsManufacturers"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-default" ng-click="reader.biometricCapture()" ng-disabled="reader.captureDisabled()">{{'CAPTURA' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

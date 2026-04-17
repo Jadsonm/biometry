@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(javap:*)",
+      "Read(//tmp/**)",
+      "Bash(mkdir -p /tmp/jar_extract2)",
+      "Bash(jar xf:*)",
+      "Bash(jar tf:*)",
+      "Bash(mkdir:*)",
+      "Bash(grep -A 30 \"lambda$convertByteArrayToBase64String\")",
+      "Bash(grep -A 30 \"lambda$convertBase64StringToByteArray\")",
+      "Bash(grep -A 20 \"private static.*lambda$convertByteArrayToBase64String\\\\|private static.*lambda$convertBase64StringToByteArray\")",
+      "Bash(grep -v \"^$\")",
+      "Bash(mkdir -p /tmp/senior_decompile)",
+      "Bash(cp -r br/com/senior /tmp/senior_decompile/)",
+      "Bash(cd:*)",
+      "Bash(grep -A 50 \"lambda$convertByteArrayToBase64String$1\\\\|public static java.util.List convertByteArrayToBase64String\")",
+      "Bash(grep -A 30 \"private static java.lang.String lambda$convertByteArrayToBase64String\")",
+      "Bash(powershell -Command \"\nAdd-Type -Path 'C:\\\\Users\\\\jadson.silva\\\\projetos\\\\biomectric\\\\BiometricServiceAPI\\\\bin\\\\Debug\\\\net8.0\\\\NITGEN.SDK.NBioBSP.dll'\n\\\\$api = New-Object NITGEN.SDK.NBioBSP.NBioAPI\n\\\\$api | Get-Member | Where-Object { \\\\$_.MemberType -eq 'Method' } | Select-Object Name, Definition | Format-List\n\")",
+      "Bash(grep -v \"^\\\\s*$\")",
+      "Bash(find /c/Senior/SAMReaders/dlls -name *.dll)",
+      "Bash(find /c/Users/jadson.silva/projetos/biomectric/BiometricServiceAPI -name *.dll)",
+      "Bash(dotnet-ildasm bin/Debug/net8.0/NITGEN.SDK.NBioBSP.dll)",
+      "Bash(ilspycmd bin/Debug/net8.0/NITGEN.SDK.NBioBSP.dll)",
+      "Bash(dotnet build:*)",
+      "Bash(cat /c/Users/jadson.silva/projetos/biomectric/BiometricServiceAPI/*.csproj)",
+      "Bash(ls /c/Users/jadson.silva/projetos/biomectric/BiometricServiceAPI/*.sln)",
+      "Bash(dotnet publish *)",
+      "Bash(where inno*)",
+      "Read(//c/Program Files \\(x86\\)/**)",
+      "Bash(where iscc *)",
+      "Bash(dotnet add *)",
+      "Bash(dotnet run *)",
+      "Bash(curl -s http://localhost:5000/apiservice/total-in-memory)"
+    ]
+  }
+}

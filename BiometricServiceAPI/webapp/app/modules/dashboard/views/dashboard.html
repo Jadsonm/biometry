@@ -1,0 +1,298 @@
+<form class="card-form" name="readersSAM" novalidate autocomplete="off">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>{{'INFORMACOES_SISTEMA_SAM' | translate}}</span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6 form-group">
+                        <label>{{'USUARIO' | translate}}</label>
+                        <span class="form-group" ng-show="isUserLoginRequired()">
+                            <label class="color-mandatory">*</label>
+                        </span>
+                        <input name="userSAM" class="form-control" ng-model="config.samUser"
+                               placeholder="{{'USUARIO' | translate}}" ng-change="hideMessageSAM()"
+                               ng-required="isUserLoginRequired()"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.userSAM)}"/>
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.userSAM)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>{{'SENHA' | translate}}</label>
+                        <span class="form-group" ng-show="isUserLoginRequired()">
+                            <label class="color-mandatory">*</label>
+                        </span>
+                        <input id="passwordSAM" class="form-control placeholder-no-fix" type="password" autocomplete="off"
+                               placeholder="{{'SENHA' | translate}}" data-ng-model="config.samPassword"
+                               ng-change="hideMessageSAM()"
+                               ng-required="isUserLoginRequired()"
+                               name="passwordSAM" ng-class="{'border-red' : hasErrorForm(readersSAM.passwordSAM)}">
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.passwordSAM)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6 checkbox">
+                        <label>
+                            <input name="applicationLogin" id="applicationLogin" type="checkbox"
+                                   ng-change="hideMessageSAM()"
+                                   ng-model="config.applicationLogin">
+                            {{'USAR_LOGIN_APLICACAO' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-show="config.applicationLogin">
+                	<div class="col-md-6 form-group">
+                        <label>{{'CHAVE_ACESSO' | translate}}</label>
+                        <label class="color-mandatory">*</label>
+                        <input name="accessKey" class="form-control" ng-model="config.accessKey"
+                               placeholder="{{'CHAVE_ACESSO' | translate}}"
+                               ng-change="hideMessageSAM()"
+                               ng-required="config.applicationLogin"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.accessKey)}" />
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.accessKey)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>{{'SEGREDO_ACESSO' | translate}}</label>
+                        <label class="color-mandatory">*</label>
+                        <input id="accessSecret" class="form-control placeholder-no-fix" type="password" autocomplete="off"
+                               placeholder="{{'SEGREDO_ACESSO' | translate}}" data-ng-model="config.accessSecret"
+                               ng-change="hideMessageSAM()"
+                               ng-required="config.applicationLogin"
+                               name="accessSecret" ng-class="{'border-red' : hasErrorForm(readersSAM.accessSecret)}" />
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.accessSecret)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" ng-show="config.applicationLogin">
+                	<div class="col-md-6 form-group">
+                        <label>{{'TENANT' | translate}}</label>
+                        <label class="color-mandatory">*</label>
+                        <input name="tenant" class="form-control" ng-model="config.tenant"
+                               placeholder="{{'TENANT' | translate}}"
+                               ng-change="hideMessageSAM()"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.tenant)}"
+                               ng-required="config.applicationLogin"/>
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.tenant)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="test-connection">
+                        <div ng-show="successSAM" class="alert alert-success" role="alert">
+                            {{'TESTE_CONEXAO_SUCESSO' | translate}}
+                        </div>
+                        <div ng-show="errorSAM" class="alert alert-danger" role="alert">
+                            {{'TESTE_CONEXAO_FALHA' | translate}}
+                        </div>
+                        <button class="btn btn-default" ng-click="testSAMConnection()"
+                                ng-disabled="isConnectionTestSAMDisabled(readersSAM)">
+                            <i class="fa fa-spinner fa-spin" ng-show="searchSAM"></i>
+                            {{'TESTAR_CONEXAO' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>{{'CONTROLID_READER' | translate}}</span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4 form-group">
+                        <label>{{'MODELO_DISPOSITIVO' | translate}}</label>                        
+                        <select ng-options="item.id as item.name for item in deviceModelList" ng-model="config.controlIdModel" ng-class="{'border-red' : hasErrorForm(readersSAM.deviceModelName)}" id="deviceModelName" class="form-control" name="deviceModelName"></select>
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.deviceModelName)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>{{'IP_DRIVER' | translate}}</label>                        
+                        <input id="ipDriver" name="ipDriver" class="form-control" ng-model="config.controlIdIP"
+                               ng-change="hideMessageSAM()"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.ipDriver)}"/>
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.ipDriver)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label>{{'PORTA_DRIVER' | translate}}</label>                        
+                        <input id="driverPort" name="driverPort" class="form-control" ng-model="config.controlIdPort"
+                               ng-change="hideMessageSAM()"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.driverPort)}"/>
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.driverPort)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6 form-group">
+                        <label>{{'USUARIO' | translate}}</label>                        
+                        <input id="userControliD" name="userControliD" class="form-control" ng-model="config.controlIdUser"
+                               placeholder="{{'USUARIO' | translate}}" ng-change="hideMessageSAM()"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.userControliD)}"/>
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.userControliD)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>{{'SENHA' | translate}}</label>                        
+                        <input id="passwordControlID" class="form-control placeholder-no-fix" type="password" autocomplete="off"
+                               placeholder="{{'SENHA' | translate}}" data-ng-model="config.controlIdPassword"
+                               ng-change="hideMessageSAM()"
+                               name="passwordControlID" ng-class="{'border-red' : hasErrorForm(readersSAM.passwordControlID)}">
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.passwordControlID)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 form-group">
+                    <div class="test-connection">
+                        <div ng-show="successControlId" class="alert alert-success" role="alert">
+                            {{'TESTE_CONEXAO_SUCESSO' | translate}}
+                        </div>
+                        <div ng-show="errorControlId" class="alert alert-danger" role="alert">
+                            {{'TESTE_CONEXAO_FALHA' | translate}}
+                        </div>
+                        <button class="btn btn-default" ng-click="testControlIdConnection()"
+                                ng-disabled="isConnectionTestControlIdDisabled(readersSAM)">
+                            <i class="fa fa-spinner fa-spin" ng-show="searchControlId"></i>
+                            {{'TESTAR_CONEXAO' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>{{'DIGICON_FACIAL_READER' | translate}}</span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6 form-group">
+                        <label>{{'ENDERECO_IP' | translate}}</label>                        
+                        <input id="digiconFacialIp" name="digiconFacialIp" class="form-control" ng-model="config.digiconFacialIp"
+                               placeholder="{{'ENDERECO_IP' | translate}}" ng-change="hideMessageSAM()"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.digiconFacialIp)}" ng-disabled="true"/>
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.digiconFacialIp)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>{{'PORTA_COMUNICACAO' | translate}}</label>                        
+                        <input id="digiconFacialPort" name="digiconFacialPort" class="form-control" ng-model="config.digiconFacialPort"
+                               placeholder="{{'PORTA_COMUNICACAO' | translate}}" ng-change="hideMessageSAM()"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.digiconFacialPort)}" ng-disabled="true">
+                        <div class="color-mandatory">
+                            <small ng-show="hasErrorForm(readersSAM.digiconFacialPort)" class="text-alert inline">
+                                {{'CAMPO_OBRIGATORIO' | translate}}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 form-group">
+                    <div class="test-connection">
+                        <div ng-show="successDigiconFacial" class="alert alert-success" role="alert">
+                            {{'TESTE_CONEXAO_SUCESSO' | translate}}
+                        </div>
+                        <div ng-show="errorDigiconFacial" class="alert alert-danger" role="alert">
+                            {{'TESTE_CONEXAO_FALHA' | translate}}
+                        </div>
+                        <button class="btn btn-default" ng-click="testDigiconFacialConnection()"
+                                ng-disabled="isConnectionTestDigiconFacialDisabled(readersSAM)">
+                            <i class="fa fa-spinner fa-spin" ng-show="searchDigiconFacial"></i>
+                            {{'TESTAR_CONEXAO' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span>{{'SMARTCARD_CONFIG_HEADER' | translate}}</span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6 form-group">
+                        <label>{{'SMARTCARD_MAP_PATH' | translate}}</label>                        
+                        <input id="smartCardMapPath" name="smartCardMapPath" class="form-control" ng-model="config.smartCardMapPath"
+                               ng-change="hideMessageSAM()"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.smartCardMapPath)}"/>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>{{'GAS_SERVICES_URL' | translate}}</label>
+                        <input id="gasServicesUrl" name="gasServicesUrl" class="form-control" ng-model="config.gasServicesUrl"
+                               ng-change="hideMessageSAM()"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.gasServicesUrl)}" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>{{'GAS_USER' | translate}}</label>
+                        <input id="gasUser" name="gasUser" class="form-control" ng-model="config.gasUser"
+                               ng-change="hideMessageSAM()"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.gasUser)}" />
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>{{'GAS_PASSWORD' | translate}}</label>
+                        <input id="gasPassword" name="gasPassword" class="form-control placeholder-no-fix" 
+                               type="password" autocomplete="off"
+                               placeholder="{{'GAS_PASSWORD' | translate}}" data-ng-model="config.gasPassword"
+                               ng-change="hideMessageSAM()"
+                               ng-class="{'border-red' : hasErrorForm(readersSAM.gasPassword)}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div ng-show="success" class="alert alert-success" role="alert">
+                {{'CONFIGURACAO_SALVO_SUCESSO' | translate}}
+            </div>
+            <div ng-show="error" class="alert alert-danger" role="alert">{{'FALHA_SALVA_CONFIGURACOES' | translate}}
+            </div>
+            <button class="btn btn-primary" ng-click="save()" ng-disabled="readersSAM.$invalid">
+                {{'SALVAR' | translate}}
+            </button>
+        </div>
+    </div>
+</form>

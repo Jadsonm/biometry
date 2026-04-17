@@ -1,0 +1,409 @@
+<?xml version="1.0"?>
+<project
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>br.com.senior.acesso.s-secure</groupId>
+    <artifactId>s-secure-readers</artifactId>
+    <name>s-secure-readers</name>
+    <version>2.18.1</version>
+    <packaging>jar</packaging>
+    <url>http://maven.apache.org</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven-deploy-plugin-version>2.8.2</maven-deploy-plugin-version>
+        <sam-updater-version>1.0.4</sam-updater-version>
+        <jersey-version>1.18.1</jersey-version>
+        <jersey-bundle-version>1.18.1</jersey-bundle-version>
+        <slf4j-version>2.0.7</slf4j-version>
+        <log4j-version>2.20.0</log4j-version>
+        <control-id-bio-version>1.0.12</control-id-bio-version>
+        <json-smart-version>1.3.1</json-smart-version>
+        <jetty-version>9.3.6.v20151106</jetty-version>
+        <guava-version>18.0</guava-version>
+        <commons-io-version>2.4</commons-io-version>
+        <morphosmart-sdk-version>6.16.0.0</morphosmart-sdk-version>
+        <junit-version>4.13.2</junit-version>
+        <lombok-version>1.16.16</lombok-version>
+        <jna-version>5.13.0</jna-version>
+        <iDBio-version>1.0.0</iDBio-version>
+        <nbiobspjni-version>1.0.0.7.1</nbiobspjni-version>
+        <jna-platform-version>4.1.0</jna-platform-version>
+        <bio-cama-version>1.0.1</bio-cama-version>
+        <suprema-version>suprema</suprema-version>
+        <s-secure-api-client-version>2.140.1</s-secure-api-client-version>
+        <s-secure-commons-version>4.45.0</s-secure-commons-version>
+        <commons-codec-version>1.3</commons-codec-version>
+        <gson-version>2.8.5</gson-version>
+        <swagger-core-version>1.5.12</swagger-core-version>
+        <okhttp-version>2.7.5</okhttp-version>
+        <jodatime-version>2.9.7</jodatime-version>
+        <mockito-core-version>4.11.0</mockito-core-version>
+        <mockito-inline-version>5.2.0</mockito-inline-version>
+        <awaitility-version>4.3.0</awaitility-version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>br.com.senior.acesso.sam</groupId>
+            <artifactId>sam-updater</artifactId>
+            <version>${sam-updater-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito-core-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>${mockito-inline-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-bundle</artifactId>
+            <version>${jersey-bundle-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zkteco.biometric</groupId>
+            <artifactId>ZKFingerReader</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>br.com.senior.acesso</groupId>
+            <artifactId>control-id-bio</artifactId>
+            <version>${control-id-bio-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.minidev</groupId>
+            <artifactId>json-smart</artifactId>
+            <version>${json-smart-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>${jetty-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>br.com.senior.acesso.s-secure</groupId>
+            <artifactId>s-secure-api-client</artifactId>
+            <version>${s-secure-api-client-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>morphosmart-sdk</groupId>
+            <artifactId>morphosmart-sdk</artifactId>
+            <version>${morphosmart-sdk-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>msosecu</groupId>
+            <artifactId>msosecu</artifactId>
+            <version>${morphosmart-sdk-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok-version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>${jna-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>br.com.senior.acesso.utils</groupId>
+            <artifactId>iDBio</artifactId>
+            <version>${iDBio-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>nbiobspjni</groupId>
+            <artifactId>nbiobspjni</artifactId>
+            <version>${nbiobspjni-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>${jna-platform-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>br.com.senior.acesso.utils</groupId>
+            <artifactId>bio-cama</artifactId>
+            <version>${bio-cama-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>suprema</groupId>
+            <artifactId>suprema</artifactId>
+            <version>${suprema-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>br.com.senior.acesso.s-secure</groupId>
+            <artifactId>s-secure-commons</artifactId>
+            <version>${s-secure-commons-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons-codec-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-core-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>logging-interceptor</artifactId>
+            <version>${okhttp-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${jodatime-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>senior-snapshot</id>
+            <name>maven-snapshots</name>
+            <url>https://maven.senior.com.br/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>libs-release</name>
+            <url>https://maven.senior.com.br/artifactory/libs-release</url>
+        </repository>
+        <repository>
+            <snapshots/>
+            <id>snapshots</id>
+            <name>libs-snapshot</name>
+            <url>https://maven.senior.com.br/artifactory/libs-snapshot</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>senior-app-version.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>senior-app-version.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>br.com.senior.acesso.sam</groupId>
+                                    <artifactId>sam-updater</artifactId>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/updater</outputDirectory>
+                                    <destFileName>Updater.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>jar-with-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <descriptor>assembly.xml</descriptor>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <finalName>Readers</finalName>
+                            <archive>
+                                <manifest>
+                                    <mainClass>br.com.senior.acesso.ssecure.readers.ReadersTrayMain</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>dist</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>assembly.xml</descriptor>
+                            </descriptors>
+                            <finalName>Readers</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven-deploy-plugin-version}</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.13</version>
+                <executions>
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Identificação Biométrica</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      color: #1a1a2e;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: #1a1a2e;
+    }
+
+    .status-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      margin-bottom: 20px;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: #cbd5e1;
+      transition: background .3s;
+    }
+    .dot.loading  { background: #f59e0b; animation: pulse 1s infinite; }
+    .dot.ready    { background: #22c55e; }
+    .dot.running  { background: #3b82f6; animation: pulse 1.2s infinite; }
+    .dot.stopped  { background: #ef4444; }
+    .dot.error    { background: #ef4444; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    .status-text {
+      font-size: 1rem;
+      color: #374151;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    button {
+      flex: 1;
+      padding: 13px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s, transform .1s;
+    }
+    button:active { transform: scale(.98); }
+    button:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+    #btn-start { background: #22c55e; color: #fff; }
+    #btn-stop  { background: #ef4444; color: #fff; }
+
+    #load-info {
+      font-size: .85rem;
+      color: #6b7280;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .log-section {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      overflow: hidden;
+    }
+
+    .log-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .log-header h2 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .badge {
+      background: #3b82f6;
+      color: #fff;
+      font-size: .75rem;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 99px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 10px 20px;
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: #9ca3af;
+      background: #f8fafc;
+    }
+
+    tbody tr {
+      border-top: 1px solid #f1f5f9;
+      animation: fadeIn .3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    tbody td {
+      padding: 12px 20px;
+      font-size: .9rem;
+    }
+
+    .empty-row td {
+      text-align: center;
+      color: #9ca3af;
+      padding: 32px 20px;
+      font-size: .9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Identificação Biométrica</h1>
+
+    <div class="status-card">
+      <div class="dot" id="dot"></div>
+      <span class="status-text" id="status-text">Aguardando...</span>
+    </div>
+
+    <div class="buttons">
+      <button id="btn-start" onclick="startFlow()">&#9654; Iniciar</button>
+      <button id="btn-stop"  onclick="stopFlow()" disabled>&#9632; Parar</button>
+    </div>
+
+    <div id="load-info"></div>
+
+    <div class="log-section" id="log-section" style="display:none">
+      <div class="log-header">
+        <h2>Identificações</h2>
+        <span class="badge" id="count-badge">0</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Horário</th>
+            <th>ID (Registro)</th>
+          </tr>
+        </thead>
+        <tbody id="log-body">
+          <tr class="empty-row"><td colspan="2">Nenhuma identificação ainda.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const BASE = '';
+    let pollTimer = null;
+    let knownCount = 0;
+
+    function setStatus(state, text) {
+      const dot = document.getElementById('dot');
+      dot.className = 'dot ' + state;
+      document.getElementById('status-text').textContent = text;
+    }
+
+    function setButtons(running) {
+      document.getElementById('btn-start').disabled = running;
+      document.getElementById('btn-stop').disabled  = !running;
+    }
+
+    async function startFlow() {
+      setButtons(true);
+      setStatus('loading', 'Carregando biometrias da Sênior...');
+      document.getElementById('load-info').style.display = 'none';
+      document.getElementById('log-section').style.display = 'none';
+      knownCount = 0;
+      renderLog([]);
+
+      // 1. Load from Senior
+      let loadResp;
+      try {
+        const res = await fetch(`${BASE}/apiservice/load-from-senior`, { method: 'POST' });
+        loadResp = await res.json();
+      } catch (e) {
+        setStatus('error', 'Erro ao carregar biometrias: ' + e.message);
+        setButtons(false);
+        return;
+      }
+
+      if (!loadResp.success && loadResp.loaded === 0) {
+        setStatus('error', 'Falha ao carregar biometrias: ' + (loadResp.message ?? 'erro desconhecido'));
+        setButtons(false);
+        return;
+      }
+
+      const info = document.getElementById('load-info');
+      info.textContent = `${loadResp.loaded} biometria(s) carregada(s) da Sênior` +
+        (loadResp.errors > 0 ? ` (${loadResp.errors} erro(s))` : '') + '.';
+      info.style.display = 'block';
+
+      try {
+        await fetch(`${BASE}/apiservice/identification/start`, { method: 'POST' });
+      } catch (e) {
+        setStatus('error', 'Erro ao iniciar identificação: ' + e.message);
+        setButtons(false);
+        return;
+      }
+
+      setStatus('ready', 'Pronto para leitura');
+      document.getElementById('log-section').style.display = 'block';
+
+      pollTimer = setInterval(pollResults, 1500);
+
+      setTimeout(() => setStatus('running', 'Identificando... Posicione o dedo no leitor'), 800);
+    }
+
+    async function stopFlow() {
+      clearInterval(pollTimer);
+      pollTimer = null;
+
+      try {
+        await fetch(`${BASE}/apiservice/identification/stop`, { method: 'POST' });
+      } catch (_) {}
+
+      setStatus('stopped', 'Identificação encerrada');
+      setButtons(false);
+    }
+
+    async function pollResults() {
+      try {
+        const res  = await fetch(`${BASE}/apiservice/identification/results`);
+        const data = await res.json();
+        if (data.count !== knownCount) {
+          knownCount = data.count;
+          renderLog(data.results);
+          document.getElementById('count-badge').textContent = knownCount;
+        }
+      } catch (_) {}
+    }
+
+    function renderLog(results) {
+      const tbody = document.getElementById('log-body');
+      if (!results || results.length === 0) {
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="2">Nenhuma identificação ainda.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = [...results].reverse().map(r =>
+        `<tr>
+          <td>${r.timestamp}</td>
+          <td><strong>${r.id}</strong></td>
+        </tr>`
+      ).join('');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+.page-header.navbar {
+    background: #1b9580;
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    border-bottom: 1px solid #e9ecf3;
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-toggle:hover {
+    background-color: #10816e;
+    height: 80px;
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.dropdown.open .dropdown-toggle {
+    background-color: #10816e;
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user > .dropdown-toggle > .username {
+    color: #fff;
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.quick-sidebar-toggler > i {
+    color: #fff;
+    font-size: 16px;
+}
+
+.page-header.navbar {
+    width: 100%;
+    padding: 0 20px;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    box-shadow: none;
+}
+
+.page-header.navbar .page-logo .logo-default {
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 110px;
+}

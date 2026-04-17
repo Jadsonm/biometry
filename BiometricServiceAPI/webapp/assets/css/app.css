@@ -1,0 +1,107 @@
+body {
+    background: #e5e5e5;
+}
+.border-red:not(:focus) {
+    border-color: red;
+}
+
+.border-red input:not(:focus) {
+    border-color: red;
+}
+
+.color-mandatory {
+    color: red;
+}
+
+.page-container {
+    padding-top: 70px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.form-group > label {
+    font-weight: normal;
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 100%;
+}
+
+.page-container > div.list-group {
+    margin-left: 10px;
+}
+
+.panel-heading > span {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card-save {
+    padding-top: 10px;
+}
+
+.spinner-bar {
+    position: fixed;
+    z-index: 10051;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.16);
+}
+
+.spinner-icon {
+    top: 40%;
+    left: 50%;
+    width: 100px;
+    margin-left: -55px;
+    text-align: center;
+    position: fixed;
+}
+
+#biometric-suprema-capturing {
+    width: 540px;
+    height: 500px;
+    background-color: white;
+    /* opacity: 0.7; */
+    box-shadow: black;
+    display: inline-block;
+    border-radius: 5%;
+    top: 15%;
+    position: absolute;
+    margin-left: -270px;
+}
+
+#biometric-suprema-capturing-message {
+    top: 20%;
+    left: 50%;
+    width: 400px;
+    margin-left: -205px;
+    text-align: center;
+    position: fixed;
+    font-size: 39px;
+    color: #6A6564;
+}
+
+.panel-default > label {
+    padding: 10px;
+}
+
+.test-connection{
+    padding-left: 15px;
+}
+
+.photo {
+    background-repeat: no-repeat!important;
+    background-position: 50%!important;
+    width: 200px!important;
+    height: 200px!important;
+    display: inline-block;
+    background-size: contain!important;
+}
+
+.badge-user {
+    width: 200px;
+    border: 4px solid #e6e6e6;
+    -webkit-border-radius: 50%!important;
+    -moz-border-radius: 50%!important;
+    border-radius: 50%!important;
+}

@@ -1,0 +1,13 @@
+<div data-ng-include="'app/modules/navbar/views/navbar.html'" class="page-header navbar navbar-fixed-top"></div>
+<div class="clearfix"></div>
+<div class="page-container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="#/dashboard/configuration" class="list-group-item"> {{'CONFIGURACOES' | translate}} </a>
+                <a href="#/dashboard/biometric/0" class="list-group-item"> {{'BIOMETRIA' | translate}} </a>
+            </div>
+        </div>
+        <div ui-view class="col-md-9"></div>
+    </div>
+</div>
